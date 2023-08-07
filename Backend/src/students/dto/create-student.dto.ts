@@ -1,5 +1,5 @@
 import { Student } from '../schemas/student.schema';
-import { IsAlpha, IsEmail, IsDate, IsEnum } from 'class-validator';
+import { IsAlpha, IsEmail, IsDate } from 'class-validator';
 
 export class CreateStudentDto extends Student {
   @IsAlpha()
