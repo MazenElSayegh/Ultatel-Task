@@ -1,2 +1,25 @@
-<p>students works!</p>
-<app-modal>I am the modal</app-modal>
+<div>
+  <table>
+    <thead>
+      <th></th>
+      <th>Student Name</th>
+      <th>Age</th>
+      <th>Gender</th>
+      <th>Email</th>
+      <th>Country</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+        <td><button class="btn btn-warning">Edit</button></td>
+        <td>{{ student.fname + student.lname }}</td>
+        <td>{{ student.birthdate }}</td>
+        <td>{{ student.email }}</td>
+        <td>{{ student.country }}</td>
+        <td><button class="btn btn-danger">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>students works!</p>
+  <app-modal></app-modal>
+</div>

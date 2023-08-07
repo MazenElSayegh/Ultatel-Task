@@ -7,9 +7,10 @@ import {
 
 @Component({
   selector: 'app-modal',
-  standalone: true,
-  imports: [NgbDatepickerModule],
+  // standalone: true,
+  // imports: [NgbDatepickerModule],
   templateUrl: './modal.component.html',
+  styleUrls: ['./modal.component.css'],
 })
 export class ModalComponent {
   closeResult = '';
