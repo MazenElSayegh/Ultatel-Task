@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 import { StudentsService } from 'src/app/Services/students.service';
 import { Student } from 'src/models/students.model';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  // standalone: true,
+  standalone: true,
   selector: 'app-students',
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.css'],
-  // imports: [ModalComponent],
+  imports: [ModalComponent, CommonModule],
 })
 export class StudentsComponent implements OnInit {
   students: Student[] | undefined;
@@ -25,7 +27,5 @@ export class StudentsComponent implements OnInit {
       },
     });
   }
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 }

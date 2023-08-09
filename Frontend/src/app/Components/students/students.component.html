@@ -1,25 +1,10 @@
-<div>
-  <table>
-    <thead>
-      <th></th>
-      <th>Student Name</th>
-      <th>Age</th>
-      <th>Gender</th>
-      <th>Email</th>
-      <th>Country</th>
-      <th></th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let student of students">
-        <td><button class="btn btn-warning">Edit</button></td>
-        <td>{{ student.fname + student.lname }}</td>
-        <td>{{ student.birthdate }}</td>
-        <td>{{ student.email }}</td>
-        <td>{{ student.country }}</td>
-        <td><button class="btn btn-danger">Delete</button></td>
-      </tr>
-    </tbody>
-  </table>
-  <p>students works!</p>
+<div class="container">
+  <div *ngFor="let student of students" class="d-flex gap-5">
+    <h3>{{ student.fname + student.lname }}</h3>
+    <h3>{{ student.birthdate | date }}</h3>
+    <h3>{{ student.email }}</h3>
+    <h3>{{ student.country }}</h3>
+    <h3><button class="btn btn-danger">Delete</button></h3>
+  </div>
   <app-modal></app-modal>
 </div>

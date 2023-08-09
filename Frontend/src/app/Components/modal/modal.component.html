@@ -1,7 +1,6 @@
-<p>modal works!</p>
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <h4 class="modal-title" id="modal-basic-title">Add/Edit Student</h4>
     <button
       type="button"
       class="btn-close"
@@ -10,9 +9,76 @@
     ></button>
   </div>
   <div class="modal-body">
-    <form>
+    <form #formRef="ngForm" (ngSubmit)="modal.close(formRef)">
       <div class="mb-3">
-        <label for="dateOfBirth">Date of birth</label>
+        <label for="firstname-input" class="form-label">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="firstname-input"
+          ngModel
+          name="fname"
+          required
+          minlength="3"
+          #fname="ngModel"
+        />
+      </div>
+      <!-- <div class="my-5"> -->
+      <div class="alert alert-danger mt-2 mb-3 p-1" *ngIf="fname.invalid && fname.touched"
+        >Enter a valid first name</div
+      >
+      <div class="mb-3">
+        <label for="lastname-input" class="form-label">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lastname-input"
+          name="lname"
+          ngModel
+          required
+          minlength="3"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="email-input" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email-input"
+          name="email"
+          ngModel
+          required
+          email
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Gender</label>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              type="radio"
+              name="gender"
+              value="male"
+              class="form-check-input"
+              checked
+            />
+            Male
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              type="radio"
+              name="gender"
+              value="female"
+              class="form-check-input"
+            />
+            Female
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dateOfBirth">Birth Date</label>
         <div class="input-group">
           <input
             id="dateOfBirth"
@@ -21,6 +87,8 @@
             name="dp"
             ngbDatepicker
             #dp="ngbDatepicker"
+            ngModel
+            required
           />
           <button
             class="btn btn-outline-secondary bi bi-calendar3"
@@ -29,23 +97,25 @@
           ></button>
         </div>
       </div>
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name="country"
+        ngModel
+        required
+      >
+        <option selected>Country</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-dark" [disabled]="!formRef.valid">Save</button>
+      </div>
     </form>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-dark"
-      (click)="modal.close('Save click')"
-    >
-      Save
-    </button>
   </div>
 </ng-template>
 
 <button class="btn btn-lg btn-outline-primary" (click)="open(content)">
-  Launch demo modal
+  New
 </button>
-
-<hr />
-
-<pre>{{ closeResult }}</pre>

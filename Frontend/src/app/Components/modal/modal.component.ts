@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, ViewChild } from '@angular/core';
+import { FormGroup, FormsModule, NgForm, Validators } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import {
   ModalDismissReasons,
   NgbDatepickerModule,
@@ -7,36 +10,31 @@ import {
 
 @Component({
   selector: 'app-modal',
-  // standalone: true,
-  // imports: [NgbDatepickerModule],
+  standalone: true,
+  imports: [NgbDatepickerModule, FormsModule, CommonModule],
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
 })
 export class ModalComponent {
-  closeResult = '';
-
   constructor(private modalService: NgbModal) {}
 
   open(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
+        (result: NgForm) => {
+          console.log(result.value);
+          console.log(result.valid);
+          console.log(result.controls['fname'].value);
         },
         (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          console.log(reason);
         }
       );
   }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  onSubmit(ref: NgForm) {
+    console.log(ref.value);
+    console.log(ref.valid);
+    console.log(ref.controls['fname'].value);
   }
 }

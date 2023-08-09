@@ -8,8 +8,13 @@ import { ModalComponent } from './Components/modal/modal.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent, StudentsComponent, ModalComponent],
-  imports: [BrowserModule, AppRoutingModule, NgbModule,HttpClientModule],
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    StudentsComponent,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
