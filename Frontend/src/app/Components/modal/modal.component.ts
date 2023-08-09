@@ -1,5 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import {
   ModalDismissReasons,
@@ -8,6 +17,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { StudentsService } from 'src/app/Services/students.service';
+import { Student } from 'src/models/students.model';
 
 @Component({
   selector: 'app-modal',
@@ -16,24 +26,39 @@ import { StudentsService } from 'src/app/Services/students.service';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
 })
-export class ModalComponent {
+export class ModalComponent implements OnChanges {
   countries = ['Egypt', 'KSA', 'UAE', 'USA', 'Italy'];
   date = {
-    year: '',
-    month: '',
-    day: '',
+    year: 0,
+    month: 0,
+    day: 0,
   };
+  @Input('student') student: any;
+  @ViewChild('content') content: any;
+  editFlag: boolean = false;
+  @Output() event= new EventEmitter();
   constructor(
     private modalService: NgbModal,
     private studentsService: StudentsService
   ) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.student) {
+      const newDate = new Date(this.student.birthdate);
+      const year = newDate.getFullYear();
+      const month = newDate.getMonth();
+      const day = newDate.getDate();
+      this.date.day = day;
+      this.date.month = month;
+      this.date.year = year;
+    }
+  }
 
   open(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (form: NgForm) => {
-          const bdate=`${this.date.year}-${this.date.month}-${this.date.day}`;
+          const bdate = `${this.date.year}-${this.date.month}-${this.date.day}`;
           const newStudent = {
             fname: form.controls['fname'].value,
             lname: form.controls['lname'].value,
@@ -43,18 +68,21 @@ export class ModalComponent {
             birthdate: Date.parse(bdate),
           };
           if (form.valid) {
-            console.log("here");
-            this.studentsService.AddNewStudent(newStudent).subscribe();
+            if (this.editFlag) {
+              this.studentsService
+                .UpdateStudentByID(this.student._id, newStudent)
+                .subscribe();
+            } else {
+              console.log('here at add');
+              this.studentsService.AddNewStudent(newStudent).subscribe();
+            }
+            this.event.emit('update');
           }
         },
         (reason) => {
           console.log(reason);
+          this.editFlag = false;
         }
       );
-  }
-  onSubmit(ref: NgForm) {
-    console.log(ref.value);
-    console.log(ref.valid);
-    console.log(ref.controls['fname'].value);
   }
 }

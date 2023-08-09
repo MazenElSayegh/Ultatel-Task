@@ -4,7 +4,8 @@
     <h3>{{ student.birthdate | date }}</h3>
     <h3>{{ student.email }}</h3>
     <h3>{{ student.country }}</h3>
-    <h3><button class="btn btn-danger">Delete</button></h3>
+    <button class="btn btn-danger">Delete</button>
+    <button class="btn btn-dark" (click)="openModal(student)">Edit</button>
   </div>
-  <app-modal></app-modal>
+  <app-modal [student]="student" (event)="notify($event)"></app-modal>
 </div>

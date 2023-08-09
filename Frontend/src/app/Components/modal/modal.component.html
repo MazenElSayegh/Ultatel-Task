@@ -1,6 +1,15 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Add/Edit Student</h4>
+    <h4
+      class="modal-title"
+      id="modal-basic-title"
+      *ngIf="student; else addStudent"
+    >
+      Edit Student
+    </h4>
+    <ng-template #addStudent>
+      <h4 class="modal-title" id="modal-basic-title">Add Student</h4>
+    </ng-template>
     <button
       type="button"
       class="btn-close"
@@ -21,6 +30,7 @@
           required
           minlength="3"
           #fname="ngModel"
+          [ngModel]="student ? student.fname : ''"
         />
       </div>
       <div
@@ -40,6 +50,7 @@
           required
           minlength="3"
           #lname="ngModel"
+          [ngModel]="student ? student.lname : ''"
         />
       </div>
       <div
@@ -59,6 +70,7 @@
           required
           email
           #email="ngModel"
+          [ngModel]="student ? student.email : ''"
         />
       </div>
       <div
@@ -79,6 +91,7 @@
               checked
               ngModel
               required
+              [ngModel]="student ? student.gender : ''"
             />
             Male
           </label>
@@ -92,6 +105,7 @@
               class="form-check-input"
               ngModel
               required
+              [ngModel]="student ? student.gender : ''"
             />
             Female
           </label>
@@ -120,7 +134,11 @@
       </div>
       <div
         class="alert alert-danger mt-2 mb-3 p-1 text-center"
-        *ngIf="formRef.controls['dp'].invalid && formRef.controls['dp'].touched"
+        *ngIf="
+          formRef.controls['dp'] &&
+          formRef.controls['dp'].invalid &&
+          formRef.controls['dp'].touched
+        "
       >
         Select a birth date
       </div>
@@ -131,6 +149,7 @@
         placeholder="select country"
         [ngModel]="countries.length ? countries[0] : null"
         #country="ngModel"
+        [ngModel]="student ? student.country : ''"
       >
         <ng-option *ngFor="let country of countries" [value]="country">{{
           country
