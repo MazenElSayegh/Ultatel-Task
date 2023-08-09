@@ -1,11 +1,14 @@
 <div class="container">
   <div *ngFor="let student of students" class="d-flex gap-5">
-    <h3>{{ student.fname + student.lname }}</h3>
-    <h3>{{ student.birthdate | date }}</h3>
+    <h3>{{ student.fname + " " + student.lname }}</h3>
+    <h3>{{ getAge(student.birthdate)  }}</h3>
     <h3>{{ student.email }}</h3>
     <h3>{{ student.country }}</h3>
-    <button class="btn btn-danger">Delete</button>
+    <button class="btn btn-danger" (click)="deleteStudent(student._id)">
+      Delete
+    </button>
     <button class="btn btn-dark" (click)="openModal(student)">Edit</button>
   </div>
   <app-modal [student]="student" (event)="notify($event)"></app-modal>
+  <h3>{{test}}</h3>
 </div>

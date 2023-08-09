@@ -35,10 +35,7 @@ export class StudentsService {
   }
 
   async remove(id: string) {
-    const deletedStudent = await this.findOne(id);
-    this.studentModel.findByIdAndDelete(id);
-    return `${
-      deletedStudent.fname + ' ' + deletedStudent.lname
-    } was removed from list of students`;
+    // const deletedStudent = await this.findOne(id);
+    return await this.studentModel.findByIdAndDelete(id);
   }
 }

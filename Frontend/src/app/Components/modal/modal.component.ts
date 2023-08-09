@@ -4,7 +4,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -17,7 +16,6 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { StudentsService } from 'src/app/Services/students.service';
-import { Student } from 'src/models/students.model';
 
 @Component({
   selector: 'app-modal',
@@ -36,7 +34,7 @@ export class ModalComponent implements OnChanges {
   @Input('student') student: any;
   @ViewChild('content') content: any;
   editFlag: boolean = false;
-  @Output() event= new EventEmitter();
+  @Output() event = new EventEmitter();
   constructor(
     private modalService: NgbModal,
     private studentsService: StudentsService

@@ -1,14 +1,11 @@
 import {
   Component,
-  OnChanges,
   OnInit,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 import { StudentsService } from 'src/app/Services/students.service';
 import { Student } from 'src/models/students.model';
-import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -21,6 +18,8 @@ import { CommonModule } from '@angular/common';
 export class StudentsComponent implements OnInit {
   students: Student[] | undefined;
   student: Student | undefined;
+  dateNow = new Date().getTime();
+  test: any;
   @ViewChild(ModalComponent) modal: ModalComponent | undefined;
   constructor(private studentsService: StudentsService) {}
   ngOnInit(): void {
@@ -48,5 +47,15 @@ export class StudentsComponent implements OnInit {
         console.log('Students fetched');
       },
     });
+  }
+  deleteStudent(id: string) {
+    this.studentsService.RemoveStudent(id).subscribe();
+    this.getAllStudents();
+  }
+  getAge(bdate: any) {
+    const birthday = new Date(bdate).getTime();
+    const diff = this.dateNow - birthday;
+    const age = Math.floor(diff / 31556952000);
+    return age;
   }
 }
