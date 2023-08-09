@@ -1,31 +1,51 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
-import { FormGroup, FormsModule, NgForm, Validators } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import {
   ModalDismissReasons,
   NgbDatepickerModule,
   NgbModal,
 } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { StudentsService } from 'src/app/Services/students.service';
 
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [NgbDatepickerModule, FormsModule, CommonModule],
+  imports: [NgbDatepickerModule, FormsModule, CommonModule, NgSelectModule],
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
 })
 export class ModalComponent {
-  constructor(private modalService: NgbModal) {}
+  countries = ['Egypt', 'KSA', 'UAE', 'USA', 'Italy'];
+  date = {
+    year: '',
+    month: '',
+    day: '',
+  };
+  constructor(
+    private modalService: NgbModal,
+    private studentsService: StudentsService
+  ) {}
 
   open(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
-        (result: NgForm) => {
-          console.log(result.value);
-          console.log(result.valid);
-          console.log(result.controls['fname'].value);
+        (form: NgForm) => {
+          const bdate=`${this.date.year}-${this.date.month}-${this.date.day}`;
+          const newStudent = {
+            fname: form.controls['fname'].value,
+            lname: form.controls['lname'].value,
+            email: form.controls['email'].value,
+            country: form.controls['country'].value,
+            gender: form.controls['gender'].value,
+            birthdate: Date.parse(bdate),
+          };
+          if (form.valid) {
+            console.log("here");
+            this.studentsService.AddNewStudent(newStudent).subscribe();
+          }
         },
         (reason) => {
           console.log(reason);

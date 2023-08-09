@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Student } from '../../models/students.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +17,7 @@ export class StudentsService {
     return this.myClient.get(this.Base_URL + '/' + id);
   }
   AddNewStudent(newStudent: any) {
-    return this.myClient.post(this.Base_URL + '/create', newStudent);
+    return this.myClient.post(this.Base_URL, newStudent);
   }
   RemoveStudent(id: any) {
     return this.myClient.delete(this.Base_URL + '/' + id);

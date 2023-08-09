@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 import { StudentsService } from 'src/app/Services/students.service';
 import { Student } from 'src/models/students.model';
@@ -14,7 +14,8 @@ import { CommonModule } from '@angular/common';
 })
 export class StudentsComponent implements OnInit {
   students: Student[] | undefined;
-  constructor(private studentsService: StudentsService) {
+  constructor(private studentsService: StudentsService) {}
+  ngOnInit(): void {
     this.studentsService.GetAllStudents().subscribe({
       next: (data: any) => {
         this.students = data;
@@ -27,5 +28,4 @@ export class StudentsComponent implements OnInit {
       },
     });
   }
-  ngOnInit(): void {}
 }

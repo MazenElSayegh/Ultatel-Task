@@ -23,10 +23,12 @@
           #fname="ngModel"
         />
       </div>
-      <!-- <div class="my-5"> -->
-      <div class="alert alert-danger mt-2 mb-3 p-1" *ngIf="fname.invalid && fname.touched"
-        >Enter a valid first name</div
+      <div
+        class="alert alert-danger mt-2 mb-3 p-1 text-center"
+        *ngIf="fname.invalid && fname.touched"
       >
+        Enter a valid first name
+      </div>
       <div class="mb-3">
         <label for="lastname-input" class="form-label">Last Name</label>
         <input
@@ -37,7 +39,14 @@
           ngModel
           required
           minlength="3"
+          #lname="ngModel"
         />
+      </div>
+      <div
+        class="alert alert-danger mt-2 mb-3 p-1 text-center"
+        *ngIf="lname.invalid && lname.touched"
+      >
+        Enter a valid last name
       </div>
       <div class="mb-3">
         <label for="email-input" class="form-label">Email</label>
@@ -49,7 +58,14 @@
           ngModel
           required
           email
+          #email="ngModel"
         />
+      </div>
+      <div
+        class="alert alert-danger mt-2 mb-3 p-1 text-center"
+        *ngIf="email.invalid && email.touched"
+      >
+        Enter a valid email
       </div>
       <div class="mb-3">
         <label class="form-label">Gender</label>
@@ -61,6 +77,8 @@
               value="male"
               class="form-check-input"
               checked
+              ngModel
+              required
             />
             Male
           </label>
@@ -72,6 +90,8 @@
               name="gender"
               value="female"
               class="form-check-input"
+              ngModel
+              required
             />
             Female
           </label>
@@ -89,6 +109,7 @@
             #dp="ngbDatepicker"
             ngModel
             required
+            [(ngModel)]="date"
           />
           <button
             class="btn btn-outline-secondary bi bi-calendar3"
@@ -97,20 +118,41 @@
           ></button>
         </div>
       </div>
-      <select
-        class="form-select"
-        aria-label="Default select example"
+      <div
+        class="alert alert-danger mt-2 mb-3 p-1 text-center"
+        *ngIf="formRef.controls['dp'].invalid && formRef.controls['dp'].touched"
+      >
+        Select a birth date
+      </div>
+      <ng-select
         name="country"
         ngModel
         required
+        placeholder="select country"
+        [ngModel]="countries.length ? countries[0] : null"
+        #country="ngModel"
       >
-        <option selected>Country</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
+        <ng-option *ngFor="let country of countries" [value]="country">{{
+          country
+        }}</ng-option>
+      </ng-select>
+      <div
+        class="alert alert-danger mt-2 mb-3 p-1 text-center"
+        *ngIf="country.invalid && country.touched"
+      >
+        Select a country
+      </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-outline-dark" [disabled]="!formRef.valid">Save</button>
+        <button class="btn btn-warning" (click)="modal.dismiss('Close button')">
+          Close
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!formRef.valid"
+        >
+          Save
+        </button>
       </div>
     </form>
   </div>
