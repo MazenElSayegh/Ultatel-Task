@@ -9,11 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import {
-  ModalDismissReasons,
-  NgbDatepickerModule,
-  NgbModal,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { StudentsService } from 'src/app/Services/students.service';
 
@@ -75,7 +71,7 @@ export class ModalComponent implements OnChanges {
               this.studentsService
                 .UpdateStudentByID(this.student._id, newStudent)
                 .subscribe(() => {
-                  this.editFlag=false;
+                  this.editFlag = false;
                 });
             } else {
               this.studentsService.AddNewStudent(newStudent).subscribe();
