@@ -3,7 +3,7 @@
     <h4
       class="modal-title"
       id="modal-basic-title"
-      *ngIf="student; else addStudent"
+      *ngIf="student && editFlag; else addStudent"
     >
       Edit Student
     </h4>
@@ -30,7 +30,7 @@
           required
           minlength="3"
           #fname="ngModel"
-          [ngModel]="student ? student.fname : ''"
+          [ngModel]="student && editFlag ? student.fname : ''"
         />
       </div>
       <div
@@ -50,7 +50,7 @@
           required
           minlength="3"
           #lname="ngModel"
-          [ngModel]="student ? student.lname : ''"
+          [ngModel]="student && editFlag ? student.lname : ''"
         />
       </div>
       <div
@@ -70,7 +70,7 @@
           required
           email
           #email="ngModel"
-          [ngModel]="student ? student.email : ''"
+          [ngModel]="student && editFlag ? student.email : ''"
         />
       </div>
       <div
@@ -91,7 +91,7 @@
               checked
               ngModel
               required
-              [ngModel]="student ? student.gender : ''"
+              [ngModel]="student && editFlag ? student.gender : ''"
             />
             Male
           </label>
@@ -105,7 +105,7 @@
               class="form-check-input"
               ngModel
               required
-              [ngModel]="student ? student.gender : ''"
+              [ngModel]="student && editFlag ? student.gender : ''"
             />
             Female
           </label>
@@ -149,7 +149,7 @@
         placeholder="select country"
         [ngModel]="countries.length ? countries[0] : null"
         #country="ngModel"
-        [ngModel]="student ? student.country : ''"
+        [ngModel]="student && editFlag ? student.country : ''"
       >
         <ng-option *ngFor="let country of countries" [value]="country">{{
           country
@@ -177,6 +177,4 @@
   </div>
 </ng-template>
 
-<button class="btn btn-lg btn-success mb-3" (click)="open(content)">
-  New
-</button>
+<button class="btn btn-lg btn-success mb-3" (click)="open(content)">New</button>

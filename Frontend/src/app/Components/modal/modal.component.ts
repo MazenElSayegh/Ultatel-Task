@@ -35,6 +35,11 @@ export class ModalComponent implements OnChanges {
   @ViewChild('content') content: any;
   editFlag: boolean = false;
   @Output() event = new EventEmitter();
+  subsDate = {
+    year: 0,
+    month: 0,
+    day: 0,
+  };
   constructor(
     private modalService: NgbModal,
     private studentsService: StudentsService
@@ -53,7 +58,7 @@ export class ModalComponent implements OnChanges {
 
   open(content: any) {
     this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title',scrollable:true })
+      .open(content, { ariaLabelledBy: 'modal-basic-title', scrollable: true })
       .result.then(
         (form: NgForm) => {
           const bdate = `${this.date.year}-${this.date.month}-${this.date.day}`;
@@ -69,9 +74,10 @@ export class ModalComponent implements OnChanges {
             if (this.editFlag) {
               this.studentsService
                 .UpdateStudentByID(this.student._id, newStudent)
-                .subscribe();
+                .subscribe(() => {
+                  this.editFlag=false;
+                });
             } else {
-              console.log('here at add');
               this.studentsService.AddNewStudent(newStudent).subscribe();
             }
             this.event.emit('update');

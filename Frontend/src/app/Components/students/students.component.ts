@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 import { StudentsService } from 'src/app/Services/students.service';
 import { Student } from 'src/models/students.model';
@@ -24,7 +30,7 @@ import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
     DeleteModalComponent,
   ],
 })
-export class StudentsComponent implements OnInit {
+export class StudentsComponent implements OnInit, OnChanges {
   students: Student[] | undefined;
   student: Student | undefined;
   @ViewChild(ModalComponent) modal: ModalComponent | undefined;
@@ -32,9 +38,14 @@ export class StudentsComponent implements OnInit {
   pageSize = 4;
   collectionSize = 0;
   paginatedStudents: Student[] | undefined;
+  searchText: string = '';
+  filteredData: Student[] | undefined;
   constructor(private studentsService: StudentsService) {}
   ngOnInit(): void {
     this.getAllStudents();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.filterTable();
   }
   openModal(student: any) {
     if (this.modal) {
@@ -44,6 +55,13 @@ export class StudentsComponent implements OnInit {
     }
   }
   notify(event: any) {
+    if (this.modal) {
+      this.modal.date = {
+        year: 0,
+        month: 0,
+        day: 0,
+      };
+    }
     this.getAllStudents();
   }
   getAllStudents() {
@@ -64,8 +82,9 @@ export class StudentsComponent implements OnInit {
     });
   }
   deleteStudent(id: string, event: any) {
-    this.studentsService.RemoveStudent(id).subscribe();
-    this.getAllStudents();
+    this.studentsService.RemoveStudent(id).subscribe(() => {
+      this.getAllStudents();
+    });
   }
   getAge(bdate: any) {
     const dateNow = new Date().getTime();
@@ -81,5 +100,22 @@ export class StudentsComponent implements OnInit {
         (this.page - 1) * this.pageSize,
         (this.page - 1) * this.pageSize + this.pageSize
       );
+    this.filteredData = this.paginatedStudents;
+  }
+  filterTable() {
+    if (this.paginatedStudents) {
+      if (!this.searchText) {
+        this.filteredData = [...this.paginatedStudents];
+        return;
+      }
+      this.filteredData = this.paginatedStudents.filter(
+        (data) =>
+          data.fname.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          data.email.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          data.lname.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          data.country.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          data.gender.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
   }
 }

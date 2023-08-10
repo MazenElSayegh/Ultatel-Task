@@ -1,7 +1,22 @@
-<div class="container">
-  <app-modal [student]="student" (event)="notify($event)"></app-modal>
-  <table class="table table-striped table-bordered">
-    <thead>
+<div class="container mt-5">
+  <div class="d-flex justify-content-between">
+    <div class="input-group mb-3 w-25">
+      <span class="input-group-text p-2 bg-primary-subtle" id=inputGroup-sizing-sm
+        ><i class="material-icons">search</i></span
+      >
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="searchText"
+        (keyup)="filterTable()"
+        placeholder="Search"
+      />
+    </div>
+    <app-modal [student]="student" (event)="notify($event)"></app-modal>
+  </div>
+  <table class="table table-info table-hover table-bordered border-dark">
+    <caption class="fw-bold">List of students</caption>
+    <thead class="table-dark">
       <tr>
         <th scope="col"></th>
         <th scope="col" class="text-center">Student Name</th>
@@ -12,8 +27,8 @@
         <th scope="col"></th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let student of paginatedStudents">
+    <tbody class="table-group-divider">
+      <tr *ngFor="let student of filteredData">
         <td class="text-center">
           <button
             class="btn btn-sm btn-outline-primary"
