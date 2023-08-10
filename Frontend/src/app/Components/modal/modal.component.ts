@@ -53,7 +53,7 @@ export class ModalComponent implements OnChanges {
 
   open(content: any) {
     this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .open(content, { ariaLabelledBy: 'modal-basic-title',scrollable:true })
       .result.then(
         (form: NgForm) => {
           const bdate = `${this.date.year}-${this.date.month}-${this.date.day}`;
