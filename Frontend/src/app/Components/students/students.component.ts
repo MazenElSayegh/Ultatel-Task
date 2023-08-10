@@ -9,10 +9,7 @@ import { ModalComponent } from '../modal/modal.component';
 import { StudentsService } from 'src/app/Services/students.service';
 import { Student } from 'src/models/students.model';
 import { CommonModule } from '@angular/common';
-import {
-  NgbPaginationModule,
-  NgbTypeaheadModule,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 
@@ -56,11 +53,7 @@ export class StudentsComponent implements OnInit, OnChanges {
   }
   notify(event: any) {
     if (this.modal) {
-      this.modal.date = {
-        year: 0,
-        month: 0,
-        day: 0,
-      };
+      this.modal.date = { year: 0, month: 0, day: 0 };
     }
     this.getAllStudents();
   }

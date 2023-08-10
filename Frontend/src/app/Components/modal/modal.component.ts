@@ -22,24 +22,17 @@ import { StudentsService } from 'src/app/Services/students.service';
 })
 export class ModalComponent implements OnChanges {
   countries = ['Egypt', 'KSA', 'UAE', 'USA', 'Italy'];
-  date = {
-    year: 0,
-    month: 0,
-    day: 0,
-  };
+  date = { year: 0, month: 0, day: 0 };
   @Input('student') student: any;
   @ViewChild('content') content: any;
   editFlag: boolean = false;
   @Output() event = new EventEmitter();
-  subsDate = {
-    year: 0,
-    month: 0,
-    day: 0,
-  };
+
   constructor(
     private modalService: NgbModal,
     private studentsService: StudentsService
   ) {}
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.student) {
       const newDate = new Date(this.student.birthdate);
