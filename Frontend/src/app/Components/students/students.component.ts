@@ -8,6 +8,7 @@ import {
   NgbTypeaheadModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 
 @Component({
   standalone: true,
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     NgbTypeaheadModule,
     NgbPaginationModule,
     FormsModule,
+    DeleteModalComponent,
   ],
 })
 export class StudentsComponent implements OnInit {
@@ -61,14 +63,9 @@ export class StudentsComponent implements OnInit {
       },
     });
   }
-  deleteStudent(id: string) {
-    const confirmDelete = confirm(
-      'Are you sure you want to delete this student?'
-    );
-    if (confirmDelete) {
-      this.studentsService.RemoveStudent(id).subscribe();
-      this.getAllStudents();
-    }
+  deleteStudent(id: string, event: any) {
+    this.studentsService.RemoveStudent(id).subscribe();
+    this.getAllStudents();
   }
   getAge(bdate: any) {
     const dateNow = new Date().getTime();

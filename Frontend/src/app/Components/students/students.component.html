@@ -1,6 +1,6 @@
 <div class="container">
-  <app-modal [student]="student" (event)="notify($event)" class="flex-end"></app-modal>
-  <table class="table table-striped">
+  <app-modal [student]="student" (event)="notify($event)"></app-modal>
+  <table class="table table-striped table-bordered">
     <thead>
       <tr>
         <th scope="col"></th>
@@ -15,8 +15,11 @@
     <tbody>
       <tr *ngFor="let student of paginatedStudents">
         <td class="text-center">
-          <button class="btn btn-dark" (click)="openModal(student)">
-            Edit
+          <button
+            class="btn btn-sm btn-outline-primary"
+            (click)="openModal(student)"
+          >
+            <i class="material-icons">edit</i>
           </button>
         </td>
         <td class="text-center">
@@ -27,9 +30,10 @@
         <td class="text-center">{{ student.email }}</td>
         <td class="text-center">{{ student.country }}</td>
         <td class="text-center">
-          <button class="btn btn-danger" (click)="deleteStudent(student._id)">
-            Delete
-          </button>
+          <app-delete-modal
+            [student]="student"
+            (event)="deleteStudent(student._id, $event)"
+          ></app-delete-modal>
         </td>
       </tr>
     </tbody>

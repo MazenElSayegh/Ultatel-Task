@@ -1,0 +1,41 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Alert</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <h5>
+      Are you sure you want to remove {{ student.fname + " " + student.lname }}
+    </h5>
+    <p>
+      All information associated to this user profile will be permanently
+      deleted.
+      <span style="color: rgb(184, 4, 4)"
+        >This operation can not be undone.</span
+      >
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      (click)="modal.close('Yes')"
+    >
+      Yes
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-success"
+      (click)="modal.dismiss('No')"
+    >
+      No
+    </button>
+  </div>
+</ng-template>
+
+<button class="btn btn-sm btn-outline-danger" (click)="open(content)"><i class="material-icons">delete</i></button>
